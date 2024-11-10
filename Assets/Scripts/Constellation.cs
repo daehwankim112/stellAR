@@ -14,6 +14,8 @@ public class Constellation : IConstellation
     
     private IStar _prevSelectedStar;
     
+    public event EventHandler<EventArgs> OnComplete;
+    
     public Vector3? PrevStarPosition
     {
         get
@@ -83,17 +85,27 @@ public class Constellation : IConstellation
 
             bool isNextLineDisconnected = _starCurrConnectionMap[star] == _starMaxConnectionMap[star];
             
-            // draw line
-            // if (_prevSelectedStar != null)
-            // {
-            //     // _lineManager.DrawLine(_prevSelectedStar.Position, star.Position, isNextLineDisconnected);
-            //     GameObject line = new("Line");
-            //     LineRenderer lineRenderer = line.AddComponent<LineRenderer>();
-            //     // lineRenderer.material = 
-            //     lineRenderer.positionCount = 2;
-            //     lineRenderer.SetPosition(0, _prevSelectedStar.Position);
-            //     lineRenderer.SetPosition(1, star.Position);
-            // }
+             // draw line
+             if (_prevSelectedStar != null)
+             {
+                 // _lineManager.DrawLine(_prevSelectedStar.Position, star.Position, isNextLineDisconnected);
+                 GameObject line = new("Line");
+                 LineRenderer lineRenderer = line.AddComponent<LineRenderer>();
+                 // lineRenderer.material = 
+                 lineRenderer.startWidth = 0.002f;
+                 lineRenderer.endWidth = 0.002f;
+                 Material whiteDiffuseMat = new Material(Shader.Find("Unlit/Texture"));
+                 lineRenderer.material = whiteDiffuseMat;
+                 lineRenderer.positionCount = 2;
+                 lineRenderer.SetPosition(0, _prevSelectedStar.Position);
+                 lineRenderer.SetPosition(1, star.Position);
+             } 
+             
+             if (IsConstellationComplete())
+             {
+                 _prevSelectedStar = null;
+                 ConstellationComplete();
+             }
             
             UpdatePrevSelectedStar(star, isNextLineDisconnected);
             if (_prevSelectedStar != null)
@@ -144,12 +156,6 @@ public class Constellation : IConstellation
         {
             _completeStarCount++;
             Debug.Log("complete Star count: " + _completeStarCount);
-            // If all stars are selected, trigger ConstellationComplete
-            if (IsConstellationComplete())
-            {
-                _prevSelectedStar = null;
-                ConstellationComplete();
-            }
         }
     }
 
@@ -179,6 +185,7 @@ public class Constellation : IConstellation
     private void ConstellationComplete()
     {
         Debug.Log("Constellation Complete!!");
+        OnComplete?.Invoke(this, EventArgs.Empty);
         return;
     }
 }

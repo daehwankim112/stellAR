@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 
 
@@ -13,7 +14,14 @@ public class GazeLineManager : BaseLineManager
     [SerializeField]
     private float _slerpSpeed;
 
-
+    private void Start()
+    {
+        _lineRenderer.startWidth = 0.002f;
+        _lineRenderer.endWidth = 0.002f;
+        Material yellowDiffuseMat = new Material(Shader.Find("Unlit/Texture"));
+        yellowDiffuseMat.color = Color.yellow;
+        _lineRenderer.material = yellowDiffuseMat;
+    }
 
     public override void ClearTemporaryLine()
     {
