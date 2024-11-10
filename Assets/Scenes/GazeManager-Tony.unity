@@ -542,6 +542,7 @@ GameObject:
   - component: {fileID: 1062943113}
   - component: {fileID: 1062943114}
   - component: {fileID: 1062943115}
+  - component: {fileID: 1062943117}
   - component: {fileID: 1062943116}
   m_Layer: 0
   m_Name: Managers
@@ -580,7 +581,7 @@ MonoBehaviour:
   _cosineAngle: 0.985
   _selectTime: 3
   _centerEyeTransform: {fileID: 1305792130}
-  _lineRenderer: {fileID: 1062943116}
+  _lineManager: {fileID: 1062943117}
   Timer: 0
 --- !u!114 &1062943115
 MonoBehaviour:
@@ -618,7 +619,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 3a2268bf79ce06c4cb5557e2521c983a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -649,8 +650,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 1
+        time: 0.4777791
+        value: 0.02926255
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -701,6 +702,19 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &1062943117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062943112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41b15c36941e5ad4682a98221923dc48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lineRenderer: {fileID: 1062943116}
 --- !u!1001 &1305792129
 PrefabInstance:
   m_ObjectHideFlags: 0

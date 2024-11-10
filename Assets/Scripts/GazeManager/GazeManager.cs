@@ -17,10 +17,10 @@ public class GazeManager : MonoBehaviour, IGazeManager
     [SerializeField]
     private Transform _centerEyeTransform;
 
-    private IConstellation _constellation;
-
     [SerializeField]
-    private LineRenderer _lineRenderer;
+    private GazeLineManager _lineManager;
+
+    private IConstellation _constellation;
 
     private IStar _prevLookAt;
 
@@ -65,13 +65,11 @@ public class GazeManager : MonoBehaviour, IGazeManager
 
             if (_constellation.PrevStarPosition.HasValue)
             {
-                _lineRenderer.positionCount = 2;
-                _lineRenderer.SetPosition(0, _constellation.PrevStarPosition.Value);
-                _lineRenderer.SetPosition(1, centerPos + (10.0f  * lookDirection));
+                _lineManager.DrawTemporaryLine(_constellation.PrevStarPosition.Value, centerPos + (10.0f  * lookDirection));
             }
             else
             {
-                _lineRenderer.positionCount = 0;
+                _lineManager.ClearTemporaryLine();
             }
 
             return;
@@ -99,13 +97,11 @@ public class GazeManager : MonoBehaviour, IGazeManager
 
         if (_constellation.PrevStarPosition.HasValue)
         {
-            _lineRenderer.positionCount = 2;
-            _lineRenderer.SetPosition(0, _constellation.PrevStarPosition.Value);
-            _lineRenderer.SetPosition(1, nearestStar.StarGameObject.transform.position);
+            _lineManager.DrawTemporaryLine(_constellation.PrevStarPosition.Value, nearestStar.StarGameObject.transform.position);
         }
         else
         {
-            _lineRenderer.positionCount = 0;
+            _lineManager.ClearTemporaryLine();
         }
     }
 
