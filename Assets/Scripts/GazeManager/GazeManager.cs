@@ -19,6 +19,8 @@ public class GazeManager : MonoBehaviour, IGazeManager
 
     public IConstellation Constellation;
 
+    private StarData _prevLookAt;
+
     public float LookAngle
     {
         get
@@ -31,6 +33,8 @@ public class GazeManager : MonoBehaviour, IGazeManager
         }
     }
 
+    public float Timer = 0.0f;
+
 
 
     void LateUpdate()
@@ -38,20 +42,30 @@ public class GazeManager : MonoBehaviour, IGazeManager
         Vector3 centerPos = _centerEyeTransform.position;
         Vector3 lookDirection = _centerEyeTransform.rotation * Vector3.forward;
 
-        foreach (var star in _stars)
+        foreach (StarData star in _stars)
         {
             if (Vector3.Dot((star.Position - centerPos).normalized, lookDirection) > _cosineAngle)
             {
                 Constellation.LookingAt(star.Star);
-                star.Timer += Time.deltaTime;
+                Timer += Time.deltaTime;
 
-                if (star.Timer >= _selectTime)
+                if (_prevLookAt == null || star != _prevLookAt)
+                {
+                    Timer = 0.0f;
+                    _prevLookAt = star;
+                }
+
+                if (Timer >= _selectTime)
                 {
                     Constellation.Selected(star.Star);
-                    star.Timer = 0.0f;
+                    Timer = 0.0f;
                 }
+                return;
             }
         }
+        
+        Timer = 0.0f;
+        _prevLookAt = null;
     }
 
 
@@ -78,13 +92,11 @@ public class GazeManager : MonoBehaviour, IGazeManager
     {
         public IStar Star;
         public Vector3 Position;
-        public float Timer;
 
         public StarData(IStar star, Vector3 position)
         {
             Star = star;
             Position = position;
-            Timer = 0.0f;
         }
     }
 }
