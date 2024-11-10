@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
 
     private StarGroup _starGroup;
     public float Scale;
-    private float _curScale;
     public float Rotation;
     private float _curRotation;
     public float Radius;
@@ -81,13 +80,12 @@ public class GameManager : MonoBehaviour
         float lerpDelta = Time.deltaTime * _lerpSpeed;
         _curRadius = Mathf.Lerp(_curRadius, Radius, lerpDelta);
         _curCenter = Vector3.Slerp(_curCenter, Center, lerpDelta);
-        _curScale = _starGroup.Spread;
         _curRotation = Mathf.LerpAngle(_curRotation, Rotation, lerpDelta);
         _curPosition = Vector3.Lerp(_curPosition, _finalPosition, lerpDelta);
 
         _starGroup.Radius = _curRadius;
         _starGroup.ReCenter(_curCenter);
-        List<Vector3> scaledStars = _starGroup.ScaledRotatedTranslated(_curScale, _curRotation, _curPosition);
+        List<Vector3> scaledStars = _starGroup.ScaledRotatedTranslated(Scale, _curRotation, _curPosition);
 
 
         for (int i = 0; i < _stars.Count; i++)
@@ -113,6 +111,8 @@ public class GameManager : MonoBehaviour
         SpawnStars();
     }
 
+
+
     private void SpawnStars()
     {
         _starGroup = StarAligner.StarGroupFromRaDec(new List<Vector2>(constellationManager[_constellationNumber].starAngles));
@@ -127,7 +127,6 @@ public class GameManager : MonoBehaviour
         _curPosition = _centerTransform.position;
         _curRadius = 0.0f;
         _curRotation = 180.0f;
-        _curScale = _starGroup.Spread;
         _finalPosition = _centerTransform.position + Offset;
     }
 
@@ -135,7 +134,7 @@ public class GameManager : MonoBehaviour
 
     private void CreateConstellation()
     {
-        List<Vector3> starPositions = _starGroup.ScaledRotatedTranslated(Scale, Rotation, _centerTransform.position + Offset);
+        List<Vector3> starPositions = _starGroup.ScaledRotatedTranslated(Scale, Rotation, _curPosition);
         List<(IStar, IStar)> starTupleList = new();
 
         for (int i = 0; i < _starGroup.StarPositions.Count; i++)

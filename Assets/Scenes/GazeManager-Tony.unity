@@ -739,6 +739,7 @@ MonoBehaviour:
     type: 3}
   parent: {fileID: 1062943112}
   constellationManager:
+  - {fileID: 11400000, guid: 2549e4535d865164fbae7cb21d0202ce, type: 2}
   - {fileID: 11400000, guid: 25c097cdba695a44abc226036cc5a50e, type: 2}
   _constellationNumber: 0
   _stars: []
@@ -752,7 +753,7 @@ MonoBehaviour:
   Offset: {x: 0, y: 1, z: 2}
   Center: {x: 0, y: 1, z: 1}
   _threshold: 0.95
-  _lerpSpeed: 0.1
+  _lerpSpeed: 0.5
 --- !u!114 &1062943119
 MonoBehaviour:
   m_ObjectHideFlags: 0
