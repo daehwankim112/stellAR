@@ -11,6 +11,7 @@ public class Constellation : IConstellation
     private Dictionary<IStar, int> _starCurrConnectionMap;
     private int _completeStarCount = 0; // this should be used, instead of _selectedStarCount
     private FinalizedLineManager _lineManager;
+    public List<GameObject> lineList= new();
     
     private IStar _prevSelectedStar;
     
@@ -99,6 +100,7 @@ public class Constellation : IConstellation
                  lineRenderer.positionCount = 2;
                  lineRenderer.SetPosition(0, _prevSelectedStar.Position);
                  lineRenderer.SetPosition(1, star.Position);
+                 lineList.Add(line);
              } 
              
              if (IsConstellationComplete())

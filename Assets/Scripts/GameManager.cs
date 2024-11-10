@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
             _uiGO.GetComponent<MenuGazeSelector>().StartEvent -= OnStart;
             Destroy(_uiGO);
         }
+        SpawnStars();
     }
 
 
@@ -90,7 +91,7 @@ public class GameManager : MonoBehaviour
         constellation.Build(starTupleList);
         constellation.OnComplete += OnConstellationComplete;
         gazeManager.GiveStarList(starList.ToArray(), constellation);
-        
+        DestroyLines();
     }
 
 
@@ -99,10 +100,27 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < starList.Count; i++)
         {
-            Destroy(starList[i]);
+            Destroy(starList[i].gameObject);
         }
 
+        /*if (constellation != null)
+        {
+            
+        }
+        for (int i = 0; i < constellation.lineList.Count; i++)
+        {
+            Destroy(constellation.lineList[i]);
+        }*/
+
         starList.Clear();
+    }
+    private void DestroyLines()
+    {
+        for (int i = 0; i < constellation.lineList.Count; i++)
+        {
+            Destroy(constellation.lineList[i]);
+        }
+
     }
 
 
