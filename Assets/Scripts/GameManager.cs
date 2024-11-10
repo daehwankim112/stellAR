@@ -1,6 +1,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using Oculus.Interaction.HandGrab.Recorder;
 using UnityEngine;
 
 
@@ -49,6 +51,8 @@ public class GameManager : MonoBehaviour
     private float _lerpSpeed;
 
     private bool _starsReady = false;
+
+    private float _timer = -1.0f;
     
 
 
@@ -64,6 +68,8 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (_starGroup == null) return;
+        _timer -= Time.deltaTime;
+
         if (!_starsReady)
         {
             MoveStars();
@@ -71,6 +77,11 @@ public class GameManager : MonoBehaviour
         else if (_constellation == null)
         {
             CreateConstellation();
+        }
+        else if (_timer < 0.0f)
+        {
+            Reset();
+            SpawnStars();
         }
     }
 
@@ -184,7 +195,7 @@ public class GameManager : MonoBehaviour
     {
         _constellationNumber = (_constellationNumber + 1) % constellationManager.Length;
         _constellation.OnComplete -= OnConstellationComplete;
-        Reset();
-        SpawnStars();
+
+        _timer = 3.0f;
     }
 }
