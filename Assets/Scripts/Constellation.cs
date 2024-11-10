@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Constellation : IConstellation
-{
+{ 
     private Dictionary<IStar, List<IStar>> _starAdjencyList;
     private Dictionary<IStar,int> _starMaxConnectionMap;
     private Dictionary<IStar, int> _starCurrConnectionMap;
