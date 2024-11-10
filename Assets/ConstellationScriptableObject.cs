@@ -9,7 +9,7 @@ public class ConstellationScriptableObject : ScriptableObject, IStar
     public Vector3[] starLocations;
 
     void IStar.LookingAt() { }
-    void IStar.Select() { }
     void IStar.NotLookingAt() { }
+    public GameObject StarGameObject { get; }
     void IStar.Confirmed() { }
 }
