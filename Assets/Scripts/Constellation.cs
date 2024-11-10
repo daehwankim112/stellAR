@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Constellation : IConstellation
@@ -9,7 +10,7 @@ public class Constellation : IConstellation
     private Dictionary<IStar,int> _starMaxConnectionMap;
     private Dictionary<IStar, int> _starCurrConnectionMap;
     private int _completeStarCount = 0; // this should be used, instead of _selectedStarCount
-    private LineManager _lineManager;
+    private FinalizedLineManager _lineManager;
     
     private IStar _prevSelectedStar;
     
@@ -40,7 +41,7 @@ public class Constellation : IConstellation
         _starAdjencyList = new Dictionary<IStar, List<IStar>>();
         _starMaxConnectionMap = new Dictionary<IStar, int>();
         _starCurrConnectionMap = new Dictionary<IStar, int>();
-        _lineManager = new LineManager();
+        _lineManager = new FinalizedLineManager();
         
         foreach ((IStar, IStar) edge in stars)
         {
@@ -83,9 +84,26 @@ public class Constellation : IConstellation
             bool isNextLineDisconnected = _starCurrConnectionMap[star] == _starMaxConnectionMap[star];
             
             // draw line
-            //_lineManager.DrawLine(_prevSelectedStar.Position, star.Position, isNextLineDisconnected);
+            // if (_prevSelectedStar != null)
+            // {
+            //     // _lineManager.DrawLine(_prevSelectedStar.Position, star.Position, isNextLineDisconnected);
+            //     GameObject line = new("Line");
+            //     LineRenderer lineRenderer = line.AddComponent<LineRenderer>();
+            //     // lineRenderer.material = 
+            //     lineRenderer.positionCount = 2;
+            //     lineRenderer.SetPosition(0, _prevSelectedStar.Position);
+            //     lineRenderer.SetPosition(1, star.Position);
+            // }
             
             UpdatePrevSelectedStar(star, isNextLineDisconnected);
+            if (_prevSelectedStar != null)
+            {
+                Debug.Log("prevStar: " + _prevSelectedStar.Position.x);
+            }
+            else
+            {
+                Debug.Log("prevStar is NULL!");
+            }
         }
     }
 
@@ -109,22 +127,27 @@ public class Constellation : IConstellation
             return;
         }
         // update given star and prevStar's currConnection
+        Debug.Log("prev Star: ");
         UpdateStarConnection(_prevSelectedStar);
+        Debug.Log("current Star: ");
         UpdateStarConnection(star);
     }
 
     private void UpdateStarConnection(IStar currStar)
     {
         // update currStar's currConnection
-        _starCurrConnectionMap[currStar] = _starCurrConnectionMap.GetValueOrDefault(currStar) + 1;
+        _starCurrConnectionMap[currStar]++;
+        Debug.Log("Star max count: " + _starMaxConnectionMap[currStar]);
+        Debug.Log("Star curr count: " + _starCurrConnectionMap[currStar]);
         // if all connections made for currStar, update completeStarCount
         if (_starCurrConnectionMap[currStar] == _starMaxConnectionMap[currStar])
         {
             _completeStarCount++;
-            
+            Debug.Log("complete Star count: " + _completeStarCount);
             // If all stars are selected, trigger ConstellationComplete
             if (IsConstellationComplete())
             {
+                _prevSelectedStar = null;
                 ConstellationComplete();
             }
         }
@@ -132,8 +155,6 @@ public class Constellation : IConstellation
 
     private bool isValidStarSelection(IStar star)
     {
-        // if selected star is not selected yet and is neighbor of prevStar -> valid selection
-        // if (no prevStar or star is neighbor of prevStar) and 
         if ((_prevSelectedStar == null || _starAdjencyList[_prevSelectedStar].Contains(star)) 
             && _starCurrConnectionMap[star] < _starMaxConnectionMap[star])
         {
@@ -157,6 +178,7 @@ public class Constellation : IConstellation
 
     private void ConstellationComplete()
     {
+        Debug.Log("Constellation Complete!!");
         return;
     }
 }

@@ -8,9 +8,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainScene.unity
     guid: 276207ea87075f2458be67f3b249208d
+  - enabled: 1
+    path: Assets/Scenes/GazeManager-Tony.unity
+    guid: 88cc052f1c8f674438ea3266f7b13b20
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: fe3f1060b195287418ace624c51846d9,
       type: 2}
