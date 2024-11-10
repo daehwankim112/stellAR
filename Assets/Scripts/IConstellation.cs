@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface IConstellation
 {
-    public void LookAt(IStar star);
+    public void LookingAt(IStar star);
+    public void Selected(IStar star);
     public void Build((IStar, IStar)[] stars);
 }
