@@ -48,6 +48,11 @@ MonoBehaviour:
   _idleParticleSystem: {fileID: 3371193429808822108}
   _lookAtParticleSystem: {fileID: 507250863884289710}
   _selectedParticleSystem: {fileID: 4386913363117994878}
+  _starState: 0
+  _timeToLookAtToConfirm: 7
+  _lookAtParticleSystemMaterial: {fileID: 2100000, guid: aae15b428bcb18d4a8bf54d18ae3396c,
+    type: 2}
+  _timeSinceLastLookedAt: 0
 --- !u!1 &1037894558057223951
 GameObject:
   m_ObjectHideFlags: 0
