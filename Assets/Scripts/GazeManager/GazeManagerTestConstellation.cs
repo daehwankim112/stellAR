@@ -37,7 +37,7 @@ public class GazeManagerTestConstellation : MonoBehaviour, IConstellation
 
 
 
-    public void Build((IStar, IStar)[] stars)
+    public void Build(List<(IStar, IStar)> stars)
     {
         throw new System.NotImplementedException();
     }

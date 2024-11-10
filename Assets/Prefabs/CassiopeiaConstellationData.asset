@@ -18,3 +18,5 @@ MonoBehaviour:
   - {x: 9.36, y: 2.5, z: 17.48}
   - {x: 8.4, y: 3.74, z: 17.76}
   - {x: 6.72, y: 4.78, z: 18.22}
+  startIndices: 
+  endIndices: 
