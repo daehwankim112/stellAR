@@ -21,15 +21,15 @@ public static class StarAligner
 
 
     // Magic numbers are just hours and degrees to radians
-    private static Vector2 ToRadians(Vector2 angles) => new(-angles.x * 0.261799387799f, (90.0f - angles.y) * 0.0174532925199f);
+    public static Vector2 ToRadians(Vector2 angles) => new(-angles.x * 0.261799387799f, (90.0f - angles.y) * 0.0174532925199f);
 
 
 
-    private static Vector3 SphereToCartesian(Vector2 angles)
+    public static Vector3 SphereToCartesian(Vector2 angles)
         => new(Mathf.Sin(angles.y) * Mathf.Cos(angles.x),
                Mathf.Sin(angles.y) * Mathf.Sin(angles.x),
                Mathf.Cos(angles.y));
 
 
-    private static Vector3 TransformAngles(Vector2 angles) => SphereToCartesian(ToRadians(angles));
+    public static Vector3 TransformAngles(Vector2 angles) => SphereToCartesian(ToRadians(angles));
 }
