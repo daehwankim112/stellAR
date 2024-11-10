@@ -18,7 +18,7 @@ public class GazeManager : MonoBehaviour, IGazeManager
     private Transform _centerEyeTransform;
 
     public IConstellation Constellation;
-    
+
     public float LookAngle
     {
         get
@@ -40,7 +40,7 @@ public class GazeManager : MonoBehaviour, IGazeManager
 
         foreach (var star in _stars)
         {
-            if (Vector3.Dot((star.Position - centerPos).normalized, lookDirection) < _cosineAngle)
+            if (Vector3.Dot((star.Position - centerPos).normalized, lookDirection) > _cosineAngle)
             {
                 Constellation.LookingAt(star.Star);
                 star.Timer += Time.deltaTime;
