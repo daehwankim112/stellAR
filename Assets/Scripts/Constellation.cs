@@ -9,8 +9,8 @@ public class Constellation : IConstellation
     private Dictionary<IStar, List<IStar>> _starAdjencyList;
     private Dictionary<IStar,int> _starMaxConnectionMap;
     private Dictionary<IStar, int> _starCurrConnectionMap;
-    private int _completeStarCount = 0; // this should be used, instead of _selectedStarCount
-    private FinalizedLineManager _lineManager;
+    private int _completeStarCount = 0;
+    public List<GameObject> lineList = new List<GameObject>();
     
     private IStar _prevSelectedStar;
     
@@ -43,7 +43,6 @@ public class Constellation : IConstellation
         _starAdjencyList = new Dictionary<IStar, List<IStar>>();
         _starMaxConnectionMap = new Dictionary<IStar, int>();
         _starCurrConnectionMap = new Dictionary<IStar, int>();
-        _lineManager = new FinalizedLineManager();
         
         foreach ((IStar, IStar) edge in stars)
         {
@@ -88,7 +87,6 @@ public class Constellation : IConstellation
              // draw line
              if (_prevSelectedStar != null)
              {
-                 // _lineManager.DrawLine(_prevSelectedStar.Position, star.Position, isNextLineDisconnected);
                  GameObject line = new("Line");
                  LineRenderer lineRenderer = line.AddComponent<LineRenderer>();
                  // lineRenderer.material = 
@@ -99,6 +97,7 @@ public class Constellation : IConstellation
                  lineRenderer.positionCount = 2;
                  lineRenderer.SetPosition(0, _prevSelectedStar.Position);
                  lineRenderer.SetPosition(1, star.Position);
+                 lineList.Add(line);
              } 
              
              if (IsConstellationComplete())
