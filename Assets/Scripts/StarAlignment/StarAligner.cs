@@ -72,5 +72,10 @@ public static class StarAligner
                Mathf.Cos(angles.y));
 
 
+
     public static Vector3 TransformAngles(Vector2 angles) => SphereToCartesian(ToRadians(angles));
+
+
+
+    public static StarGroup StarGroupFromRaDec(List<Vector2> angles, float radius = 1.0f) => new(angles.Select(TransformAngles).ToList(), radius);
 }

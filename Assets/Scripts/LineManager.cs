@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 
-public class LineManager : MonoBehaviour, ILineManager
+public class LineManager : MonoBehaviour
 {
     private LineRenderer finalizedLineRenderer;
     private LineRenderer temporaryLineRenderer;

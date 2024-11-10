@@ -593,7 +593,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062943112}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 49f38a1afe9a34b4c86984761f00de63, type: 3}
   m_Name: 
@@ -601,6 +601,10 @@ MonoBehaviour:
   StarPrefab: {fileID: 585766413316342734, guid: ae98b93921b56624a80a0e5e199de155,
     type: 3}
   GazeManager: {fileID: 1062943112}
+  Scale: 1
+  Rotation: 10
+  Radius: 5
+  Center: {fileID: 1305792130}
 --- !u!120 &1062943116
 LineRenderer:
   serializedVersion: 2
@@ -726,7 +730,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062943112}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c355a9081b65f164e8a30dec1720b168, type: 3}
   m_Name: 
@@ -745,7 +749,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062943112}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b766ac5efabac74bb562e398678b5b8, type: 3}
   m_Name: 
