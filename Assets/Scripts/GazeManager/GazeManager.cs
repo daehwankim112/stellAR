@@ -1,6 +1,5 @@
 
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -18,7 +17,7 @@ public class GazeManager : MonoBehaviour, IGazeManager
     [SerializeField]
     private Transform _centerEyeTransform;
 
-    public IConstellation Constellation;
+    private IConstellation _constellation;
 
     private IStar _prevLookAt;
 
@@ -75,7 +74,7 @@ public class GazeManager : MonoBehaviour, IGazeManager
         if (Timer >= _selectTime)
         {
             Timer = 0.0f;
-            Constellation.Selected(nearestStar);
+            _constellation.Selected(nearestStar);
         }
         else
         {
@@ -90,5 +89,6 @@ public class GazeManager : MonoBehaviour, IGazeManager
     {
         _stars.Clear();
         _stars.AddRange(stars);
+        _constellation = constellation;
     }
 }
