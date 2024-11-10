@@ -65,7 +65,8 @@ public class GazeManager : MonoBehaviour, IGazeManager
 
             if (_constellation != null && _constellation.PrevStarPosition != null)
             {
-                _lineManager.DrawTemporaryLine(_constellation.PrevStarPosition.Value, centerPos + (10.0f  * lookDirection));
+                float lineDistance = (_constellation.PrevStarPosition.Value - centerPos).magnitude;
+                _lineManager.DrawTemporaryLine(_constellation.PrevStarPosition.Value, centerPos + (lineDistance * lookDirection));
             }
             else
             {
