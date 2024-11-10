@@ -17,7 +17,7 @@ public class Constellation : IConstellation
     {
         get
         {
-            return _prevSelectedStar != null ? _prevSelectedStar.StarGameObject.transform.position : (Vector3?)null;
+            return _prevSelectedStar != null ? _prevSelectedStar.GetPosition() : (Vector3?)null;
         }
         private set { } // Keep the setter private if needed
     }
@@ -44,11 +44,28 @@ public class Constellation : IConstellation
         
         foreach ((IStar, IStar) edge in stars)
         {
+            if (_starAdjencyList.ContainsKey(edge.Item1) == false)
+            {
+                _starAdjencyList.Add(edge.Item1, new List<IStar>());
+            }
             _starAdjencyList[edge.Item1].Add(edge.Item2);
+
+            if (_starAdjencyList.ContainsKey(edge.Item2) == false)
+            {
+                _starAdjencyList.Add(edge.Item2, new List<IStar>());
+            }
             _starAdjencyList[edge.Item2].Add(edge.Item1);
             
             _starMaxConnectionMap[edge.Item1] = _starMaxConnectionMap.GetValueOrDefault(edge.Item1) + 1;
             _starMaxConnectionMap[edge.Item2] = _starMaxConnectionMap.GetValueOrDefault(edge.Item2) + 1;
+        }
+        
+        foreach (IStar star in _starAdjencyList.Keys)
+        {
+            foreach (var neighbor in _starAdjencyList[star])
+            {
+                Debug.Log("Check: " + star.GetPosition().x + "Neighbor: " + neighbor.GetPosition().x);
+            }
         }
     }
 
@@ -71,7 +88,7 @@ public class Constellation : IConstellation
             bool isNextLineDisconnected = _starCurrConnectionMap[star] == _starMaxConnectionMap[star];
             
             // draw line
-            _lineManager.DrawLine(_prevSelectedStar.StarGameObject.transform.position, star.StarGameObject.transform.position, isNextLineDisconnected);
+            _lineManager.DrawLine(_prevSelectedStar.GetPosition(), star.GetPosition(), isNextLineDisconnected);
             
             UpdatePrevSelectedStar(star, isNextLineDisconnected);
         }

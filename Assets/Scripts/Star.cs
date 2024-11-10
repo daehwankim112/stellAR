@@ -109,8 +109,13 @@ public class Star : MonoBehaviour, IStar
         }
     }
 
-    public GameObject StarGameObject
+    public Vector3 GetPosition()
     {
-        get { return transform.gameObject; }
+        return transform.position;
+    }
+
+    public void SetPosition(Vector3 position)
+    {
+        transform.position = position;
     }
 }
