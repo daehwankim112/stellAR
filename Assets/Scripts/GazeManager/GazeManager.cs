@@ -1,12 +1,13 @@
 
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
 
 public class GazeManager : MonoBehaviour, IGazeManager
 {
-    private readonly List<StarData> _stars = new();
+    private readonly List<IStar> _stars = new();
 
     [SerializeField]
     private float _cosineAngle;
@@ -19,7 +20,7 @@ public class GazeManager : MonoBehaviour, IGazeManager
 
     public IConstellation Constellation;
 
-    private StarData _prevLookAt;
+    private IStar _prevLookAt;
 
     public float LookAngle
     {
@@ -42,78 +43,52 @@ public class GazeManager : MonoBehaviour, IGazeManager
         Vector3 centerPos = _centerEyeTransform.position;
         Vector3 lookDirection = _centerEyeTransform.rotation * Vector3.forward;
 
-        foreach (StarData star in _stars)
+        IStar nearestStar = null;
+        float closestAngle = _cosineAngle;
+
+        foreach (IStar star in _stars)
         {
-            if (Vector3.Dot((star.Position - centerPos).normalized, lookDirection) > _cosineAngle)
+            if (Vector3.Dot((star.StarGameObject.transform.position - centerPos).normalized, lookDirection) > closestAngle)
             {
-                // Constellation.LookingAt(star.Star);
-                Timer += Time.deltaTime;
-
-                // Switch selected star if necessary
-                if (_prevLookAt == null || star != _prevLookAt)
-                {
-                    Timer = 0.0f;
-                    _prevLookAt = star;
-                }
-
-                // Select star
-                if (Timer >= _selectTime)
-                {
-                    Constellation.Selected(star.Star);
-                    Timer = 0.0f;
-                }
-                return;
+                nearestStar = star;
             }
         }
-        
-        // No star selected
-        Timer = 0.0f;
-        _prevLookAt = null;
-    }
 
-
-
-    /// <summary>
-    /// Give a list of stars to look at in the scene
-    /// </summary>
-    /// <param name="stars">
-    /// The stars
-    /// </param>
-    public void GiveStarList(IStar[] stars)
-    {
-        _stars.Clear();
-        
-        foreach (IStar star in stars)
+        if (nearestStar == null)
         {
-            if (star is MonoBehaviour starMB)
-            {
-                if (starMB.TryGetComponent(out Transform transform))
-                {
-                    _stars.Add(new(star, transform.position));
-                }
-            }
+            // No star selected
+            Timer = 0.0f;
+            _prevLookAt?.NotLookingAt();
+            _prevLookAt = null;
+            return;
+        }
+
+        // Switch selected star if necessary
+        if (_prevLookAt == null || nearestStar != _prevLookAt)
+        {
+            Timer = 0.0f;
+            _prevLookAt?.NotLookingAt();
+            _prevLookAt = nearestStar;
+        }
+
+        // Select star
+        if (Timer >= _selectTime)
+        {
+            Timer = 0.0f;
+            Constellation.Selected(nearestStar);
+        }
+        else
+        {
+            Timer += Time.deltaTime;
+            nearestStar.LookingAt();
         }
     }
 
 
-
-    /// <summary>
-    /// Utility class to get around the IStar interface
-    /// </summary>
-    private class StarData
-    {
-        public IStar Star;
-        public Vector3 Position;
-
-        public StarData(IStar star, Vector3 position)
-        {
-            Star = star;
-            Position = position;
-        }
-    }
 
     public void GiveStarList(IStar[] stars, IConstellation constellation)
     {
-        
+        _stars.Clear();
+        stars.AddRange(stars);
     }
 }
