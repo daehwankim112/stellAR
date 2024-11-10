@@ -1,41 +1,47 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class GameManager : MonoBehaviour {
+
+
+public class GameManager : MonoBehaviour
+{
 
     public GameObject star;
     public GameObject parent;
     public ConstellationScriptableObject[] constellationManager;
-    public int constellationNumber = 1;
-    public Constellation constellation = new();
+    public int constellationNumber;
+    public Constellation constellation;
     public List<(IStar, IStar)> starTupleList = new();
     
-    [SerializeField] List<Star> starList = new List<Star>();
+    [SerializeField] List<Star> starList = new();
     [SerializeField] GazeManager gazeManager;
     
-    void Start() {
+    void Start()
+    {
         // Pick constellation randomly from ConstellationList
         int randomIndex = Random.Range(0, constellationManager.Length); // Get random index
         // ConstellationScriptableObject constellationData = constellationManager[randomIndex];
         
         // Have starting instructions for person to get them into position
-        SpawnStars(0);
+        SpawnStars();
         // constellation.Build();
         
     }
 
-    void Update() {
+    void Update()
+    {
         //if (constellation is complete) {
         //  constellationNumber++;
         //  SpawnStars();
         //}
     }
 
-    private void SpawnStars(int index) {
+
+
+    private void SpawnStars()
+    {
         // for (int i = 0; i < constellationManager[constellationNumber].starLocations.Length; i++)
         // {
         //     GameObject currentEntity = Instantiate(star);
@@ -46,26 +52,26 @@ public class GameManager : MonoBehaviour {
         
         starList.Clear();
         
-        Debug.Log("star location length: " + constellationManager[index].starLocations.Length);
+        Debug.Log("star location length: " + constellationManager[constellationNumber].starLocations.Length);
 
-        for (int i = 0; i < constellationManager[index].starLocations.Length; i++)
+        for (int i = 0; i < constellationManager[constellationNumber].starLocations.Length; i++)
         {
-            var _instantiatedStar = Instantiate(star, constellationManager[index].starLocations[i], Quaternion.identity);
+            var _instantiatedStar = Instantiate(star, constellationManager[constellationNumber].starLocations[i], Quaternion.identity);
             starList.Add(_instantiatedStar.GetComponent<Star>());
         }
         
         
-        for (int i = 0; i < constellationManager[index].startIndices.Length; i++)
+        for (int i = 0; i < constellationManager[constellationNumber].startIndices.Length; i++)
         {
-            int startIndex = constellationManager[index].startIndices[i];
-            int endIndex = constellationManager[index].endIndices[i];
+            int startIndex = constellationManager[constellationNumber].startIndices[i];
+            int endIndex = constellationManager[constellationNumber].endIndices[i];
             
             Star startStar = starList[startIndex];
             Star endStar = starList[endIndex];
             if (startStar != null && endStar != null)
             {
-                startStar.Position = constellationManager[index].starLocations[startIndex];
-                endStar.Position = constellationManager[index].starLocations[endIndex];
+                startStar.Position = constellationManager[constellationNumber].starLocations[startIndex];
+                endStar.Position = constellationManager[constellationNumber].starLocations[endIndex];
             }
 
             (IStar, IStar) starTuple = (startStar as IStar, endStar as IStar);
@@ -73,8 +79,18 @@ public class GameManager : MonoBehaviour {
             starTupleList.Add(starTuple);
         }
 
+        constellation = new();
         constellation.Build(starTupleList);
+        constellation.OnComplete += OnConstellationComplete;
         gazeManager.GiveStarList(starList.ToArray(), constellation);
         
+    }
+
+
+
+    private void OnConstellationComplete(object sender, System.EventArgs e)
+    {
+        constellationNumber = (constellationNumber + 1) % constellationManager.Length;
+        SpawnStars();
     }
 }
