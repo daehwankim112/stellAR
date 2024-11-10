@@ -715,7 +715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lineRenderer: {fileID: 1062943116}
-  _slerpSpeed: 0.5
+  _slerpSpeed: 0.2
 --- !u!1001 &1305792129
 PrefabInstance:
   m_ObjectHideFlags: 0
