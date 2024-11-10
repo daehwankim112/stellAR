@@ -21,12 +21,17 @@ public static class StarAligner
 
 
 
-    public static List<Vector2> LoadStars(string path)
+    /// <summary>
+    /// Loads star data from a file and converts it to a list of Vector3 (RA, Dec, magnitude).
+    /// </summary>
+    /// <param name="path">The path to the file containing star data.</param>
+    /// <returns>A list of Vector3 coordinates representing the stars.</returns>
+    public static List<Vector3> LoadStars(string path)
     {
         using FileStream fs = File.OpenRead(path);
-
         using StreamReader reader = new(fs);
-        List<Vector2> stars = new();
+
+        List<Vector3> stars = new();
         string line;
         while ((line = reader.ReadLine()) != null)
         {
@@ -41,11 +46,12 @@ public static class StarAligner
             int.TryParse(parts[6], out int dec_seconds) &&
             float.TryParse(parts[7], out float magnitude))
             {
-                float ra = ra_hours + (((ra_minutes / 60.0f) + (ra_seconds / 3600.0f)) * 24.0f / 260.0f);
-                float dec = (parts[3] == "-" ? -1 : 1) * (dec_degrees + (ra_minutes / 60.0f) + (ra_seconds / 3600.0f));
-                stars.Add(new Vector2(ra, dec));
+                float ra = ra_hours + ((ra_minutes / 60.0f) + (ra_seconds / 3600.0f)) * 15.0f;
+                float dec = (parts[3] == "-" ? -1 : 1) * (dec_degrees + (dec_minutes / 60.0f) + (dec_seconds / 3600.0f));
+                stars.Add(new(ra, dec, magnitude));
             }
         }
+
         return stars;
     }
 
