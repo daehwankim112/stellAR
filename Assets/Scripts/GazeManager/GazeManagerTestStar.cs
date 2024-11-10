@@ -21,6 +21,14 @@ public class GazeManagerTestStar : MonoBehaviour, IStar
     {
         
     }
+    
+    public Vector3 GetPosition()
+    {
+        return Vector3.zero;
+    }
 
-    public GameObject StarGameObject { get; }
+    public void SetPosition(Vector3 position)
+    {
+        
+    }
 }
