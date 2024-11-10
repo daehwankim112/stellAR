@@ -50,7 +50,7 @@ public class GazeManager : MonoBehaviour, IGazeManager
 
         foreach (IStar star in _stars)
         {
-            if (Vector3.Dot((star.StarGameObject.transform.position - centerPos).normalized, lookDirection) > closestAngle)
+            if (Vector3.Dot((star.Position - centerPos).normalized, lookDirection) > closestAngle)
             {
                 nearestStar = star;
             }
@@ -97,7 +97,7 @@ public class GazeManager : MonoBehaviour, IGazeManager
 
         if (_constellation.PrevStarPosition.HasValue)
         {
-            _lineManager.DrawTemporaryLine(_constellation.PrevStarPosition.Value, nearestStar.StarGameObject.transform.position);
+            _lineManager.DrawTemporaryLine(_constellation.PrevStarPosition.Value, nearestStar.Position);
         }
         else
         {

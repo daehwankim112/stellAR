@@ -5,9 +5,13 @@ using UnityEngine;
 
 public class GazeManagerTestStar : MonoBehaviour, IStar
 {
-    public GameObject StarGameObject => gameObject;
+    public Vector3 Position
+    {
+        get => gameObject.transform.position;
+        set => gameObject.transform.position = value;
+    }
 
-
+    
 
     public void LookingAt()
     {

@@ -47,6 +47,6 @@ public class GazeManagerTestConstellation : MonoBehaviour, IConstellation
     public void Selected(IStar star)
     {
         star.Confirmed();
-        PrevStarPosition = star.StarGameObject.transform.position;
+        PrevStarPosition = star.Position;
     }
 }
