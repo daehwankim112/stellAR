@@ -46,7 +46,7 @@ public class GazeManager : MonoBehaviour, IGazeManager
         {
             if (Vector3.Dot((star.Position - centerPos).normalized, lookDirection) > _cosineAngle)
             {
-                Constellation.LookingAt(star.Star);
+                // Constellation.LookingAt(star.Star);
                 Timer += Time.deltaTime;
 
                 // Switch selected star if necessary
@@ -110,5 +110,10 @@ public class GazeManager : MonoBehaviour, IGazeManager
             Star = star;
             Position = position;
         }
+    }
+
+    public void GiveStarList(IStar[] stars, IConstellation constellation)
+    {
+        
     }
 }

@@ -6,6 +6,8 @@ public class GazeManagerTestConstellation : MonoBehaviour, IConstellation
 {
     public GameObject StarPrefab;
     public GameObject GazeManager;
+    public Vector3? PrevStarPosition { get; private set; }
+
 
     public readonly List<GameObject> Stars = new();
 
@@ -23,7 +25,7 @@ public class GazeManagerTestConstellation : MonoBehaviour, IConstellation
         for (int _ = 0; _ < num; _++)
         {
             GameObject newStar = Instantiate(StarPrefab);
-            newStar.transform.position = 50.0f * Random.insideUnitSphere;
+            newStar.transform.position = 5.0f * Random.insideUnitSphere;
             Stars.Add(newStar);
             starComponents.Add(newStar.GetComponent<IStar>());
         }
@@ -51,6 +53,6 @@ public class GazeManagerTestConstellation : MonoBehaviour, IConstellation
 
     public void Selected(IStar star)
     {
-        star.Selected();
+        star.Confirmed();
     }
 }

@@ -59,7 +59,7 @@ public class Star : MonoBehaviour, IStar
         }
     }
 
-    public void Selected()
+    public void Confirmed()
     {
         _starState = StarState.Selected;
     }
@@ -67,5 +67,10 @@ public class Star : MonoBehaviour, IStar
     public void LookingAt()
     {
         _starState = StarState.LookAt;
+    }
+
+    public void NotLookingAt()
+    {
+        
     }
 }

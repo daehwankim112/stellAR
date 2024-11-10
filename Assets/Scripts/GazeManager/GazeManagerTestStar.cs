@@ -11,9 +11,14 @@ public class GazeManagerTestStar : MonoBehaviour, IStar
         transform.Rotate(Vector3.forward, 180.0f * Time.deltaTime);
     }
 
-    public void Selected()
+    public void Confirmed()
     {
         Debug.Log("Star is selected");
         transform.Rotate(Vector3.up, 15.0f);
+    }
+
+    public void NotLookingAt()
+    {
+        
     }
 }

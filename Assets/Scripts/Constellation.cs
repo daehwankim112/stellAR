@@ -7,6 +7,8 @@ public class Constellation : IConstellation
 {
     private Dictionary<IStar, List<IStar>> _starAdjencyList;
     private Dictionary<IStar,Boolean> _starSelectMap;
+    public Vector3? PrevStarPosition { get; private set; }
+
     
     // Start is called before the first frame update
     void Start()
