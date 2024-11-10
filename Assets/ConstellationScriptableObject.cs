@@ -8,6 +8,8 @@ public class ConstellationScriptableObject : ScriptableObject, IStar
     public Dictionary<IStar, IStar[]> starData;
     public Vector3[] starLocations;
 
-    void IStar.LookAt() { }
+    void IStar.LookingAt() { }
     void IStar.Select() { }
+    void IStar.NotLookingAt() { }
+    void IStar.Confirmed() { }
 }
