@@ -24,6 +24,8 @@ public class GazeManager : MonoBehaviour, IGazeManager
 
     private IStar _prevLookAt;
 
+    public bool GazeOn = false;
+
     public float LookAngle
     {
         get
@@ -42,6 +44,8 @@ public class GazeManager : MonoBehaviour, IGazeManager
 
     void LateUpdate()
     {
+        if (!GazeOn) return;
+        
         Vector3 centerPos = _centerEyeTransform.position;
         Vector3 lookDirection = _centerEyeTransform.rotation * Vector3.forward;
 
@@ -50,6 +54,8 @@ public class GazeManager : MonoBehaviour, IGazeManager
 
         foreach (IStar star in _stars)
         {
+            if (star == null) continue;
+            
             if (Vector3.Dot((star.Position - centerPos).normalized, lookDirection) > closestAngle)
             {
                 nearestStar = star;

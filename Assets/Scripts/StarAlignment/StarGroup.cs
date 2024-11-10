@@ -47,7 +47,7 @@ public class StarGroup
     {
         center = center.normalized;
         Vector3 com = CenterOfMassSurface();
-        if ((center - com).sqrMagnitude < 0.01f) return;
+        if ((center - com).sqrMagnitude < 0.0001f) return;
 
         Vector3 poleVector = Vector3.Cross(com, center).normalized;
         float distance = Vector3.Angle(com, center);
