@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/ConstellationScriptableObject", order = 1)]
 public class ConstellationScriptableObject : ScriptableObject, IStar
@@ -14,10 +15,9 @@ public class ConstellationScriptableObject : ScriptableObject, IStar
     void IStar.LookingAt() { }
     void IStar.NotLookingAt() { }
     void IStar.Confirmed() { }
-
-    Vector3 IStar.GetPosition()
+    public Vector3 Position
     {
-        return Vector3.zero;
+        get => Vector3.zero;
+        set => _ = value;
     }
-    void IStar.SetPosition(Vector3 position) { }
 }

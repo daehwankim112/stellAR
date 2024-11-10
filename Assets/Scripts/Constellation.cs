@@ -17,7 +17,7 @@ public class Constellation : IConstellation
     {
         get
         {
-            return _prevSelectedStar != null ? _prevSelectedStar.GetPosition() : (Vector3?)null;
+            return _prevSelectedStar != null ? _prevSelectedStar.Position : (Vector3?)null;
         }
         private set { } // Keep the setter private if needed
     }
@@ -58,14 +58,9 @@ public class Constellation : IConstellation
             
             _starMaxConnectionMap[edge.Item1] = _starMaxConnectionMap.GetValueOrDefault(edge.Item1) + 1;
             _starMaxConnectionMap[edge.Item2] = _starMaxConnectionMap.GetValueOrDefault(edge.Item2) + 1;
-        }
-        
-        foreach (IStar star in _starAdjencyList.Keys)
-        {
-            foreach (var neighbor in _starAdjencyList[star])
-            {
-                Debug.Log("Check: " + star.GetPosition().x + "Neighbor: " + neighbor.GetPosition().x);
-            }
+            _starCurrConnectionMap[edge.Item1] = _starCurrConnectionMap.GetValueOrDefault(edge.Item1);
+            _starCurrConnectionMap[edge.Item2] = _starCurrConnectionMap.GetValueOrDefault(edge.Item2);
+
         }
     }
 
@@ -88,7 +83,7 @@ public class Constellation : IConstellation
             bool isNextLineDisconnected = _starCurrConnectionMap[star] == _starMaxConnectionMap[star];
             
             // draw line
-            _lineManager.DrawLine(_prevSelectedStar.GetPosition(), star.GetPosition(), isNextLineDisconnected);
+            //_lineManager.DrawLine(_prevSelectedStar.Position, star.Position, isNextLineDisconnected);
             
             UpdatePrevSelectedStar(star, isNextLineDisconnected);
         }
@@ -121,7 +116,7 @@ public class Constellation : IConstellation
     private void UpdateStarConnection(IStar currStar)
     {
         // update currStar's currConnection
-        _starCurrConnectionMap[currStar]++;
+        _starCurrConnectionMap[currStar] = _starCurrConnectionMap.GetValueOrDefault(currStar) + 1;
         // if all connections made for currStar, update completeStarCount
         if (_starCurrConnectionMap[currStar] == _starMaxConnectionMap[currStar])
         {

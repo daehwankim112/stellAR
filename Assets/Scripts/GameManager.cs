@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour {
     public List<(IStar, IStar)> starTupleList = new();
     
     [SerializeField] List<Star> starList = new List<Star>();
+    [SerializeField] GazeManager gazeManager;
     
     void Start() {
         // Pick constellation randomly from ConstellationList
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour {
         // Have starting instructions for person to get them into position
         SpawnStars(0);
         // constellation.Build();
+        
     }
 
     void Update() {
@@ -62,8 +64,8 @@ public class GameManager : MonoBehaviour {
             Star endStar = starList[endIndex];
             if (startStar != null && endStar != null)
             {
-                startStar.SetPosition(constellationManager[index].starLocations[startIndex]);
-                endStar.SetPosition(constellationManager[index].starLocations[endIndex]);
+                startStar.Position = constellationManager[index].starLocations[startIndex];
+                endStar.Position = constellationManager[index].starLocations[endIndex];
             }
 
             (IStar, IStar) starTuple = (startStar as IStar, endStar as IStar);
@@ -72,5 +74,7 @@ public class GameManager : MonoBehaviour {
         }
 
         constellation.Build(starTupleList);
+        gazeManager.GiveStarList(starList.ToArray(), constellation);
+        
     }
 }

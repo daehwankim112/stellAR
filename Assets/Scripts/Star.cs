@@ -98,7 +98,10 @@ public class Star : MonoBehaviour, IStar
 
     public void LookingAt()
     {
-        _starState = StarState.LookAt;
+        if (_starState == StarState.Idle)
+        {
+            _starState = StarState.LookAt;
+        }
     }
 
     public void NotLookingAt()
@@ -109,13 +112,9 @@ public class Star : MonoBehaviour, IStar
         }
     }
 
-    public Vector3 GetPosition()
+    public Vector3 Position
     {
-        return transform.position;
-    }
-
-    public void SetPosition(Vector3 position)
-    {
-        transform.position = position;
+        get => transform.position;
+        set => transform.position = value;
     }
 }
