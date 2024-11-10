@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
         {
             CreateConstellation();
         }
-        else if (_timer < 0.0f)
+        else if (false && _timer < 0.0f)
         {
             Reset();
             SpawnStars();
@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour
 
     private void OnStart(object obj, EventArgs e)
     {
-        if (_uiGO != null)
+        if (_uiGO)
         {
             Destroy(_uiGO);
         }
@@ -168,6 +168,7 @@ public class GameManager : MonoBehaviour
         _constellation.Build(starTupleList);
         _constellation.OnComplete += OnConstellationComplete;
         _gazeManager.GiveStarList(_stars.ToArray(), _constellation);
+        _gazeManager.GazeOn = true;
     }
 
 
@@ -187,6 +188,7 @@ public class GameManager : MonoBehaviour
         _stars.Clear();
         _starsReady = false;
         _constellation = null;
+        _gazeManager.GazeOn = false;
     }
 
 
@@ -197,5 +199,8 @@ public class GameManager : MonoBehaviour
         _constellation.OnComplete -= OnConstellationComplete;
 
         _timer = 3.0f;
+        
+        Reset();
+        SpawnStars();
     }
 }

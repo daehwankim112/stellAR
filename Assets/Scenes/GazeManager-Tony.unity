@@ -391,9 +391,9 @@ MonoBehaviour:
   _centerTransform: {fileID: 1305792130}
   Scale: 1
   Rotation: 0
-  Radius: 4
-  Offset: {x: 0, y: 1, z: 0}
-  Center: {x: 0, y: 1, z: 1}
+  Radius: 5
+  Offset: {x: 0, y: 2, z: 2}
+  Center: {x: 0, y: 1, z: 2}
   _threshold: 0.95
   _lerpSpeed: 0.5
 --- !u!114 &1062943119
@@ -707,7 +707,7 @@ MonoBehaviour:
   _lutWeight: 1
   _flipLutY: 1
   serializedSurfaceGeometry: []
-  textureOpacity_: 1
+  textureOpacity_: 0.233
   edgeRenderingEnabled_: 0
   edgeColor_: {r: 1, g: 1, b: 1, a: 1}
   colorMapType: 0

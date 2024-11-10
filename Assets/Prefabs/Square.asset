@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Square
   m_EditorClassIdentifier: 
   starAngles:
-  - {x: 3, y: -30}
-  - {x: 21, y: -30}
-  - {x: 21, y: 30}
-  - {x: 3, y: 30}
+  - {x: 2, y: -20}
+  - {x: 22, y: -20}
+  - {x: 22, y: 20}
+  - {x: 2, y: 20}
   startIndices: 00000000010000000200000003000000
   endIndices: 01000000020000000300000000000000
