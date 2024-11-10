@@ -50,6 +50,8 @@ public class GazeManager : MonoBehaviour, IGazeManager
 
         foreach (IStar star in _stars)
         {
+            if (star == null) continue;
+            
             if (Vector3.Dot((star.Position - centerPos).normalized, lookDirection) > closestAngle)
             {
                 nearestStar = star;
