@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -7,7 +8,6 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
-
     public GameObject star;
     public GameObject parent;
     public ConstellationScriptableObject[] constellationManager;
@@ -15,27 +15,37 @@ public class GameManager : MonoBehaviour
     public Constellation constellation;
     public List<(IStar, IStar)> starTupleList = new();
     
-    [SerializeField] List<Star> starList = new();
-    [SerializeField] GazeManager gazeManager;
+    [SerializeField]
+    List<Star> starList = new();
+
+    [SerializeField]
+    GazeManager gazeManager;
+
+    [SerializeField]
+    private GameObject _uiPrefab;
+    private GameObject _uiGO;
+
+    [SerializeField]
+    private Transform _centerTransform;
     
+
+
     void Start()
     {
-        // Pick constellation randomly from ConstellationList
-        int randomIndex = Random.Range(0, constellationManager.Length); // Get random index
-        // ConstellationScriptableObject constellationData = constellationManager[randomIndex];
-        
-        // Have starting instructions for person to get them into position
-        SpawnStars();
-        // constellation.Build();
-        
+        _uiGO = Instantiate(_uiPrefab);
+        _uiGO.GetComponent<MenuGazeSelector>().centerEyeTransform = _centerTransform;
+        _uiGO.GetComponent<MenuGazeSelector>().StartEvent += OnStart;
     }
 
-    void Update()
+
+
+    private void OnStart(object obj, EventArgs e)
     {
-        //if (constellation is complete) {
-        //  constellationNumber++;
-        //  SpawnStars();
-        //}
+        if (_uiGO != null)
+        {
+            _uiGO.GetComponent<MenuGazeSelector>().StartEvent -= OnStart;
+            Destroy(_uiGO);
+        }
     }
 
 
@@ -49,8 +59,7 @@ public class GameManager : MonoBehaviour
         //     currentEntity.transform.SetParent(parent.transform);
         //     currentEntity.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
         // }
-        
-        starList.Clear();
+        DestroyStars();
         
         Debug.Log("star location length: " + constellationManager[constellationNumber].starLocations.Length);
 
@@ -73,10 +82,8 @@ public class GameManager : MonoBehaviour
                 startStar.Position = constellationManager[constellationNumber].starLocations[startIndex];
                 endStar.Position = constellationManager[constellationNumber].starLocations[endIndex];
             }
-
-            (IStar, IStar) starTuple = (startStar as IStar, endStar as IStar);
             
-            starTupleList.Add(starTuple);
+            starTupleList.Add((startStar, endStar));
         }
 
         constellation = new();
@@ -88,9 +95,22 @@ public class GameManager : MonoBehaviour
 
 
 
+    private void DestroyStars()
+    {
+        for (int i = 0; i < starList.Count; i++)
+        {
+            Destroy(starList[i]);
+        }
+
+        starList.Clear();
+    }
+
+
+
     private void OnConstellationComplete(object sender, System.EventArgs e)
     {
         constellationNumber = (constellationNumber + 1) % constellationManager.Length;
+        constellation.OnComplete -= OnConstellationComplete;
         SpawnStars();
     }
 }
