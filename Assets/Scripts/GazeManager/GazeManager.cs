@@ -49,12 +49,14 @@ public class GazeManager : MonoBehaviour, IGazeManager
                 Constellation.LookingAt(star.Star);
                 Timer += Time.deltaTime;
 
+                // Switch selected star if necessary
                 if (_prevLookAt == null || star != _prevLookAt)
                 {
                     Timer = 0.0f;
                     _prevLookAt = star;
                 }
 
+                // Select star
                 if (Timer >= _selectTime)
                 {
                     Constellation.Selected(star.Star);
@@ -64,12 +66,19 @@ public class GazeManager : MonoBehaviour, IGazeManager
             }
         }
         
+        // No star selected
         Timer = 0.0f;
         _prevLookAt = null;
     }
 
 
 
+    /// <summary>
+    /// Give a list of stars to look at in the scene
+    /// </summary>
+    /// <param name="stars">
+    /// The stars
+    /// </param>
     public void GiveStarList(IStar[] stars)
     {
         _stars.Clear();
@@ -88,6 +97,9 @@ public class GazeManager : MonoBehaviour, IGazeManager
 
 
 
+    /// <summary>
+    /// Utility class to get around the IStar interface
+    /// </summary>
     private class StarData
     {
         public IStar Star;
