@@ -9,6 +9,7 @@ public class Constellation : IConstellation
     private Dictionary<IStar,int> _starMaxConnectionMap;
     private Dictionary<IStar, int> _starCurrConnectionMap;
     private int _completeStarCount = 0; // this should be used, instead of _selectedStarCount
+    private LineManager _lineManager;
     
     private IStar _prevSelectedStar;
     
@@ -39,6 +40,7 @@ public class Constellation : IConstellation
         _starAdjencyList = new Dictionary<IStar, List<IStar>>();
         _starMaxConnectionMap = new Dictionary<IStar, int>();
         _starCurrConnectionMap = new Dictionary<IStar, int>();
+        _lineManager = new LineManager();
         
         foreach ((IStar, IStar) edge in stars)
         {
@@ -64,11 +66,28 @@ public class Constellation : IConstellation
             // update given star and prevStar's currConnection
             UpdateStarConnectionCount(star);
             
-            // update recentSelectedStar
-            _prevSelectedStar = star;
             star.Confirmed();
+
+            bool isNextLineDisconnected = _starCurrConnectionMap[star] == _starMaxConnectionMap[star];
+            
+            // draw line
+            _lineManager.DrawLine(_prevSelectedStar.StarGameObject.transform.position, star.StarGameObject.transform.position, isNextLineDisconnected);
+            
+            UpdatePrevSelectedStar(star, isNextLineDisconnected);
         }
-        // else, star.Wrong?
+    }
+
+    private void UpdatePrevSelectedStar(IStar star, bool isNextLineDisconnected)
+    {
+        // check if currStar is deadend and need to find new star to draw line
+        if (isNextLineDisconnected && !IsConstellationComplete())
+        {
+            _prevSelectedStar = null;
+        }
+        else
+        {
+            _prevSelectedStar = star;
+        }
     }
 
     private void UpdateStarConnectionCount(IStar star)
@@ -80,12 +99,6 @@ public class Constellation : IConstellation
         // update given star and prevStar's currConnection
         UpdateStarConnection(_prevSelectedStar);
         UpdateStarConnection(star);
-        
-        // check if currStar is deadend and need to find new star to draw line
-        if (_starCurrConnectionMap[star] == _starMaxConnectionMap[star] && !IsConstellationComplete())
-        {
-            _prevSelectedStar = null;
-        }
     }
 
     private void UpdateStarConnection(IStar currStar)
