@@ -3,50 +3,44 @@ using UnityEngine;
 
 
 
-public class LineManager : MonoBehaviour, ILineManager
+public class LineManager : MonoBehaviour
 {
-    private LineRenderer finalizedLineRenderer;
-    private LineRenderer temporaryLineRenderer;
-    private int pointIndex = 0;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        finalizedLineRenderer = gameObject.AddComponent<LineRenderer>();
-        temporaryLineRenderer = gameObject.AddComponent<LineRenderer>();
-    }
+    [SerializeField]
+    private LineRenderer _lineRenderer;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private Vector3 _prevPosition;
 
-    public void DrawTemporaryLine(Vector3 prevStarPoint, Vector3 lookPoint)
-    {
-        temporaryLineRenderer.positionCount = 2;
-        temporaryLineRenderer.SetPosition(0, prevStarPoint);
-        temporaryLineRenderer.SetPosition(1, lookPoint);
-        
-    }
+    [SerializeField]
+    private float _slerpSpeed;
+
+
 
     public void ClearTemporaryLine()
     {
-        temporaryLineRenderer.positionCount = 0;
+        _lineRenderer.positionCount = 0;
     }
+
+
 
     public void DrawLine(Vector3 start, Vector3 end, bool isDiscontinued = false)
     {
-        finalizedLineRenderer.positionCount = pointIndex + 1;
-        finalizedLineRenderer.SetPosition(pointIndex, start);
-        finalizedLineRenderer.positionCount = pointIndex + 1;
-        finalizedLineRenderer.SetPosition(pointIndex, end);
-        
-        if (isDiscontinued)
+        throw new System.NotImplementedException();
+    }
+
+
+
+    public void DrawTemporaryLine(Vector3 prevStarPoint, Vector3 lookPoint)
+    {
+        if (_lineRenderer.positionCount == 0)
         {
-            // if lines should be disconnected from this point, insert same point again to make the gap
-            finalizedLineRenderer.positionCount = pointIndex + 1;
-            finalizedLineRenderer.SetPosition(pointIndex, end);
+            _lineRenderer.positionCount = 2;
+            _prevPosition = lookPoint;
         }
+
+        lookPoint = Vector3.Lerp(_prevPosition, lookPoint, _slerpSpeed);
+        _prevPosition = lookPoint;
+
+        _lineRenderer.SetPosition(0, prevStarPoint);
+        _lineRenderer.SetPosition(1, lookPoint);
     }
 }
