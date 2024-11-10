@@ -7,6 +7,6 @@ public interface IStar
     public void Confirmed();
     public void LookingAt();
     public void NotLookingAt();
-    
-    public GameObject StarGameObject { get; }
+    public Vector3 GetPosition();
+    public void SetPosition(Vector3 position);
 }

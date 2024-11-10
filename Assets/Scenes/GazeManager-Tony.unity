@@ -611,12 +611,7 @@ MonoBehaviour:
   star: {fileID: 128002401}
   parent: {fileID: 1062943112}
   constellationManager:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 9956d635d2c16164f8f7bf6579bee14d, type: 2}
   constellationNumber: 1
 --- !u!1001 &1305792129
 PrefabInstance:

@@ -13,6 +13,11 @@ public class ConstellationScriptableObject : ScriptableObject, IStar
 
     void IStar.LookingAt() { }
     void IStar.NotLookingAt() { }
-    public GameObject StarGameObject { get; }
     void IStar.Confirmed() { }
+
+    Vector3 IStar.GetPosition()
+    {
+        return Vector3.zero;
+    }
+    void IStar.SetPosition(Vector3 position) { }
 }
