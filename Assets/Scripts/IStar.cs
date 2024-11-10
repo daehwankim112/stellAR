@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IStar
 {
-    public void Select();
-    public void LookAt();
+    public void Selected();
+    public void LookingAt();
 }
