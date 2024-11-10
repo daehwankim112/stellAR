@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
@@ -22,6 +23,9 @@ public class Star : MonoBehaviour, IStar
     [SerializeField] Material _lookAtParticleSystemMaterial;
     [SerializeField] float _timeSinceLastLookedAt = 0f;
     [SerializeField] Color _defaultLookAtEmissionColor = new Color(0.964f, 0.992f, 0f);
+    [SerializeField] private AudioClip _audioSourceLookAt;
+    [SerializeField] private AudioClip _audioSourceSelected;
+    [SerializeField] private AudioSource _audioSource;
     private float _lookAtMaterialEmissionColorItensifier;
     private ParticleSystem.MainModule _particleSystemLookAtMain;
     
@@ -94,6 +98,8 @@ public class Star : MonoBehaviour, IStar
     public void Confirmed()
     {
         _starState = StarState.Selected;
+        _audioSource.Stop();
+        _audioSource.PlayOneShot(_audioSourceSelected);
     }
 
     public void LookingAt()
@@ -101,6 +107,7 @@ public class Star : MonoBehaviour, IStar
         if (_starState == StarState.Idle)
         {
             _starState = StarState.LookAt;
+            _audioSource.PlayOneShot(_audioSourceLookAt);
         }
     }
 
@@ -109,6 +116,7 @@ public class Star : MonoBehaviour, IStar
         if (_starState == StarState.LookAt)
         {
             _starState = StarState.Idle;
+            _audioSource.Stop();
         }
     }
 
