@@ -741,6 +741,7 @@ MonoBehaviour:
   constellationManager:
   - {fileID: 11400000, guid: 25c097cdba695a44abc226036cc5a50e, type: 2}
   - {fileID: 11400000, guid: 2549e4535d865164fbae7cb21d0202ce, type: 2}
+  - {fileID: 11400000, guid: c046fdc73e4eca64c8a1712b193a6391, type: 2}
   _constellationNumber: 0
   _stars: []
   _gazeManager: {fileID: 1062943114}
@@ -749,8 +750,8 @@ MonoBehaviour:
   _centerTransform: {fileID: 1305792130}
   Scale: 1
   Rotation: 0
-  Radius: 3
-  Offset: {x: 0, y: 1, z: 2}
+  Radius: 4
+  Offset: {x: 0, y: 1, z: 0}
   Center: {x: 0, y: 1, z: 1}
   _threshold: 0.95
   _lerpSpeed: 0.5
