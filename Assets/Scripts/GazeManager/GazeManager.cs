@@ -19,6 +19,9 @@ public class GazeManager : MonoBehaviour, IGazeManager
 
     private IConstellation _constellation;
 
+    [SerializeField]
+    private LineRenderer _lineRenderer;
+
     private IStar _prevLookAt;
 
     public float LookAngle
@@ -59,6 +62,18 @@ public class GazeManager : MonoBehaviour, IGazeManager
             Timer = 0.0f;
             _prevLookAt?.NotLookingAt();
             _prevLookAt = null;
+
+            if (_constellation.PrevStarPosition.HasValue)
+            {
+                _lineRenderer.positionCount = 2;
+                _lineRenderer.SetPosition(0, _constellation.PrevStarPosition.Value);
+                _lineRenderer.SetPosition(1, centerPos + (10.0f  * lookDirection));
+            }
+            else
+            {
+                _lineRenderer.positionCount = 0;
+            }
+
             return;
         }
 
@@ -80,6 +95,17 @@ public class GazeManager : MonoBehaviour, IGazeManager
         {
             Timer += Time.deltaTime;
             nearestStar.LookingAt();
+        }
+
+        if (_constellation.PrevStarPosition.HasValue)
+        {
+            _lineRenderer.positionCount = 2;
+            _lineRenderer.SetPosition(0, _constellation.PrevStarPosition.Value);
+            _lineRenderer.SetPosition(1, nearestStar.StarGameObject.transform.position);
+        }
+        else
+        {
+            _lineRenderer.positionCount = 0;
         }
     }
 

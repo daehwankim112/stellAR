@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class LineManager : ILineManager
+public class LineManager : MonoBehaviour, ILineManager
 {
     private LineRenderer finalizedLineRenderer;
     private LineRenderer temporaryLineRenderer;
@@ -12,8 +12,8 @@ public class LineManager : ILineManager
     // Start is called before the first frame update
     void Start()
     {
-        finalizedLineRenderer = new LineRenderer();
-        temporaryLineRenderer = new LineRenderer();
+        finalizedLineRenderer = gameObject.AddComponent<LineRenderer>();
+        temporaryLineRenderer = gameObject.AddComponent<LineRenderer>();
     }
 
     // Update is called once per frame
