@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     public float Radius;
     private float _curRadius;
     public Vector3 Offset;
+    public Vector3 Center;
     private Vector3 _curPosition;
     private Vector3 _finalPosition;
     private Vector3 _curCenter;
@@ -63,6 +64,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (_starGroup == null) return;
         if (!_starsReady)
         {
             MoveStars();
@@ -78,7 +80,7 @@ public class GameManager : MonoBehaviour
     {
         float lerpDelta = Time.deltaTime * _lerpSpeed;
         _curRadius = Mathf.Lerp(_curRadius, Radius, lerpDelta);
-        _curCenter = Vector3.Slerp(_curCenter, Vector3.up, lerpDelta);
+        _curCenter = Vector3.Slerp(_curCenter, Center, lerpDelta);
         _curScale = _starGroup.Spread;
         _curRotation = Mathf.LerpAngle(_curRotation, Rotation, lerpDelta);
         _curPosition = Vector3.Lerp(_curPosition, _finalPosition, lerpDelta);
@@ -106,12 +108,10 @@ public class GameManager : MonoBehaviour
     {
         if (_uiGO != null)
         {
-            _uiGO.GetComponent<MenuGazeSelector>().StartEvent -= OnStart;
             Destroy(_uiGO);
         }
+        SpawnStars();
     }
-
-
 
     private void SpawnStars()
     {
