@@ -89,6 +89,6 @@ public class GazeManager : MonoBehaviour, IGazeManager
     public void GiveStarList(IStar[] stars, IConstellation constellation)
     {
         _stars.Clear();
-        stars.AddRange(stars);
+        _stars.AddRange(stars);
     }
 }

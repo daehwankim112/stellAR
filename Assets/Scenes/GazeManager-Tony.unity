@@ -472,8 +472,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cosineAngle: 0.985
-  _selectTime: 5
+  _selectTime: 3
   _centerEyeTransform: {fileID: 1305792130}
+  Timer: 0
 --- !u!114 &1062943115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,7 +487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49f38a1afe9a34b4c86984761f00de63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StarPrefab: {fileID: 4739436335196858762, guid: c25900daca4658a46bfb7b720c648920,
+  StarPrefab: {fileID: 585766413316342734, guid: ae98b93921b56624a80a0e5e199de155,
     type: 3}
   GazeManager: {fileID: 1062943112}
 --- !u!1001 &1305792129

@@ -14,7 +14,7 @@ public class GazeManagerTestConstellation : MonoBehaviour, IConstellation
 
     void Start()
     {
-        SpawnRandomStars(10);
+        SpawnRandomStars(20);
     }
 
 
@@ -25,14 +25,14 @@ public class GazeManagerTestConstellation : MonoBehaviour, IConstellation
         for (int _ = 0; _ < num; _++)
         {
             GameObject newStar = Instantiate(StarPrefab);
-            newStar.transform.position = 5.0f * Random.insideUnitSphere;
+            Vector2 angles = new(Random.Range(0.0f, 24.0f), Random.Range(-90.0f, 90.0f));
+            newStar.transform.position = 5.0f * StarAligner.TransformAngles(angles);
             Stars.Add(newStar);
             starComponents.Add(newStar.GetComponent<IStar>());
         }
 
         GazeManager gazeManagerComponent = GazeManager.GetComponent<GazeManager>();
-        gazeManagerComponent.GiveStarList(starComponents.ToArray());
-        gazeManagerComponent.Constellation = this;
+        gazeManagerComponent.GiveStarList(starComponents.ToArray(), this);
     }
 
 
