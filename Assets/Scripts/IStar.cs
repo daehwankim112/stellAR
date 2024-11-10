@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface IStar
 {
-    public void Selected();
+    public void Confirmed();
     public void LookingAt();
+    public void NotLookingAt();
 }

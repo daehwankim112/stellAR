@@ -11,6 +11,8 @@ public class Constellation : IConstellation
     private int _completeStarCount = 0; // this should be used, instead of _selectedStarCount
     
     private IStar _prevSelectedStar;
+    public Vector3? PrevStarPosition { get; private set; }
+
     
     // Start is called before the first frame update
     void Start()
@@ -56,7 +58,7 @@ public class Constellation : IConstellation
             
             // update recentSelectedStar
             _prevSelectedStar = star;
-            star.Selected();
+            star.Confirmed();
         }
         // else, star.Wrong?
     }
