@@ -13,6 +13,18 @@ public class StarGroup
 
     public float Radius;
 
+    public float Spread
+    {
+        get
+        {
+            Vector3 com = CenterOfMassSurface();
+
+            float angleSum = 0.0f;
+            StarPositions.ForEach(p => angleSum += Vector3.Angle(com, p));
+            return Radius * angleSum / StarPositions.Count;
+        }
+    }
+
 
 
     public StarGroup(float radius = 1.0f)
