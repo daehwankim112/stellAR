@@ -739,8 +739,8 @@ MonoBehaviour:
     type: 3}
   parent: {fileID: 1062943112}
   constellationManager:
-  - {fileID: 11400000, guid: 2549e4535d865164fbae7cb21d0202ce, type: 2}
   - {fileID: 11400000, guid: 25c097cdba695a44abc226036cc5a50e, type: 2}
+  - {fileID: 11400000, guid: 2549e4535d865164fbae7cb21d0202ce, type: 2}
   _constellationNumber: 0
   _stars: []
   _gazeManager: {fileID: 1062943114}
