@@ -4,6 +4,9 @@ using UnityEngine;
 
 public interface IStar
 {
-    public void Select();
-    public void LookAt();
+    public void Confirmed();
+    public void LookingAt();
+    public void NotLookingAt();
+    
+    public GameObject StarGameObject { get; }
 }
