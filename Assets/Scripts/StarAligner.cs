@@ -37,14 +37,14 @@ public static class StarAligner
         {
             string[] parts = line.Split('\t');
             if (parts.Length == 8 &&
-            int.TryParse(parts[0], out int ra_hours) &&
-            int.TryParse(parts[1], out int ra_minutes) &&
-            float.TryParse(parts[2], out float ra_seconds) &&
-            (parts[3] == "+" || parts[3] == "-") &&
-            int.TryParse(parts[4], out int dec_degrees) &&
-            int.TryParse(parts[5], out int dec_minutes) &&
-            int.TryParse(parts[6], out int dec_seconds) &&
-            float.TryParse(parts[7], out float magnitude))
+                int.TryParse(parts[0], out int ra_hours) &&
+                int.TryParse(parts[1], out int ra_minutes) &&
+                float.TryParse(parts[2], out float ra_seconds) &&
+                (parts[3] == "+" || parts[3] == "-") &&
+                int.TryParse(parts[4], out int dec_degrees) &&
+                int.TryParse(parts[5], out int dec_minutes) &&
+                int.TryParse(parts[6], out int dec_seconds) &&
+                float.TryParse(parts[7], out float magnitude))
             {
                 float ra = ra_hours + ((ra_minutes / 60.0f) + (ra_seconds / 3600.0f)) * 15.0f;
                 float dec = (parts[3] == "-" ? -1 : 1) * (dec_degrees + (dec_minutes / 60.0f) + (dec_seconds / 3600.0f));
@@ -57,7 +57,11 @@ public static class StarAligner
 
 
 
-    // Magic numbers are just hours and degrees to radians
+    /// <summary>
+    /// Converts angles from hours and degrees to radians.
+    /// </summary>
+    /// <param name="angles">A Vector2 where x is Right Ascension (hours) and y is Declination (degrees).</param>
+    /// <returns>A Vector2 where x and y are in radians.</returns>
     public static Vector2 ToRadians(Vector2 angles) => new(-angles.x * 0.261799387799f, (90.0f - angles.y) * 0.0174532925199f);
 
 
