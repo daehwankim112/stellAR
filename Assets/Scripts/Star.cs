@@ -74,5 +74,8 @@ public class Star : MonoBehaviour, IStar
         
     }
 
-    public GameObject StarGameObject { get; }
+    public GameObject StarGameObject
+    {
+        get { return transform.gameObject; }
+    }
 }

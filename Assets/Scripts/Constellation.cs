@@ -35,7 +35,7 @@ public class Constellation : IConstellation
         
     }
     
-    public void Build((IStar, IStar)[] stars)
+    public void Build(List<(IStar, IStar)> stars)
     {
         _starAdjencyList = new Dictionary<IStar, List<IStar>>();
         _starMaxConnectionMap = new Dictionary<IStar, int>();
