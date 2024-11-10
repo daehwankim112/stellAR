@@ -11,7 +11,15 @@ public class Constellation : IConstellation
     private int _completeStarCount = 0; // this should be used, instead of _selectedStarCount
     
     private IStar _prevSelectedStar;
-    public Vector3? PrevStarPosition { get; private set; }
+    
+    public Vector3? PrevStarPosition
+    {
+        get
+        {
+            return _prevSelectedStar != null ? _prevSelectedStar.StarGameObject.transform.position : (Vector3?)null;
+        }
+        private set { } // Keep the setter private if needed
+    }
 
     
     // Start is called before the first frame update

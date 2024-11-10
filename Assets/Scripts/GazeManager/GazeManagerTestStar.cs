@@ -21,4 +21,6 @@ public class GazeManagerTestStar : MonoBehaviour, IStar
     {
         
     }
+
+    public GameObject StarGameObject { get; }
 }
